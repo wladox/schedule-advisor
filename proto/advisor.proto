@@ -1,0 +1,25 @@
+syntax ="proto3";
+
+package internal;
+
+option go_package = "internal/grpc";
+
+service SchedulerAdvisor {
+  rpc GetCosts (ReschedulingRequest) returns (ReconfigurationCost) {}
+}
+
+message ReschedulingRequest {
+  string time = 1;
+  Placement currentPlacement = 2;
+  Placement newPlacement = 3;
+
+  message Placement {
+    map<string, string> assignments = 1;
+  }
+
+}
+
+message ReconfigurationCost {
+  int64 currentCost = 1;
+  int64 optimalCost = 2;
+}

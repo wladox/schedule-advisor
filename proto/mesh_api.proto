@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package api;
+
+option java_package = "io.grpc.resourcemesh.api";
+
+service ResourceMeshRPC {
+    rpc UpdateNodeInformation(NodeInformation) returns (Response) {}
+
+    rpc GetNodeInformation(NodeId) returns (NodeInformation) {}
+
+    rpc GetAllNodes(Empty) returns (GraphNodes) {}
+}
+
+message GraphNode {
+    NodeId id = 1;
+    NodeInformation info = 2;
+}
+
+message GraphNodes {
+    repeated GraphNode nodes = 1;
+}
+
+message NodeInformation {
+    repeated Metric localInformation = 1;
+    repeated Metric peerInformation = 2;
+    string id = 3;
+}
+
+message Empty {
+
+}
+
+message NodeId {
+    string id = 1;
+}
+
+message Response {
+    string message = 1;
+}
+
+message Metric {
+    string id = 1;
+    string peer = 2;
+    double metric = 3;
+    string metricName = 4;
+
+}
